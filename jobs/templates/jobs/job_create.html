@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block title %}Post a New Job Opening{% endblock title %}
+
+{% block content %}
+    <div class="row justify-content-center">
+        <div class="col-md-9 col-lg-8">
+            <div class="card shadow-lg border-0">
+                <div class="card-body p-5">
+                    <h2 class="card-title text-center mb-4 text-primary fw-bold">Post a New Job Opening</h2>
+                    <form method="post">
+                        {% csrf_token %}
+
+                        {% if form.non_field_errors %}
+                            <div class="alert alert-danger" role="alert">
+                                {{ form.non_field_errors }}
+                            </div>
+                        {% endif %}
+
+                        {% for field in form %}
+                            <div class="mb-3">
+                                <label for="{{ field.id_for_label }}" class="form-label">{{ field.label }}</label>
+
+                                {% if field.field.widget.input_type == 'textarea' %}
+                                    <textarea name="{{ field.name }}" id="{{ field.id_for_label }}" class="form-control form-control-lg" rows="8" {% if field.field.required %}required{% endif %}>{{ field.value|default:'' }}</textarea>
+                                {% else %}
+                                    <input type="{{ field.field.widget.input_type|default:'text' }}" name="{{ field.name }}" id="{{ field.id_for_label }}" class="form-control form-control-lg" value="{{ field.value|default:'' }}" {% if field.field.required %}required{% endif %}>
+                                {% endif %}
+
+                                {% for error in field.errors %}
+                                    <div class="invalid-feedback d-block">{{ error }}</div>
+                                {% endfor %}
+                            </div>
+                        {% endfor %}
+
+                        <div class="d-grid mt-4">
+                            <button type="submit" class="btn btn-warning btn-lg fw-bold">Submit Job Listing</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock content %}
