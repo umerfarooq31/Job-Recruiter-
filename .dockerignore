@@ -1,0 +1,12 @@
+# --- .dockerignore ---
+# Ignore Python cache and virtual environment
+__pycache__/
+*.pyc
+*.log
+.venv
+venv/
+
+# Ignore local configuration and IDE files
+.vscode/
+.idea/
+*.sqlite3 # Or your specific database file
